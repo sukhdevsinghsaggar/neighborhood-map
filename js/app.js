@@ -2,7 +2,7 @@
 var map;
 var service;
 // for storing the info window instance
-var myIndfoWindow;
+var myInfoWindow;
 // for storing the markers
 var markerList = [];   
 // for storing the result 
@@ -211,7 +211,7 @@ function initMap(){
 
     });
     // creating a new info window instance
-    myIndfoWindow = new google.maps.InfoWindow();
+    myInfoWindow = new google.maps.InfoWindow();
     var placeTypeSearch = ViewModel.placeType();
     placeTypeSearch = encodeURIComponent(placeTypeSearch.trim());
     // fetch the zomato data
@@ -230,26 +230,26 @@ function showMarkers() {
 }
 
 // populating the info window
-function populateInfoWindow(marker, myIndfoWindow)
+function populateInfoWindow(marker, myInfoWindow)
 {
      //setting the marker
-    if( myIndfoWindow.marker !== marker && myIndfoWindow.marker !== undefined )
+    if( myInfoWindow.marker !== marker && myInfoWindow.marker !== undefined )
     {
-        myIndfoWindow.marker.setAnimation( null );
+        myInfoWindow.marker.setAnimation( null );
     }
 
-    myIndfoWindow.marker = marker;
+    myInfoWindow.marker = marker;
 
-    myIndfoWindow.marker.setAnimation( google.maps.Animation.BOUNCE );
+    myInfoWindow.marker.setAnimation( google.maps.Animation.BOUNCE );
     
     toggleBounce(marker);
     
     get_flickr(marker);
     
-    myIndfoWindow.open( map , marker );
+    myInfoWindow.open( map , marker );
 
-    myIndfoWindow.addListener('closeclick' , function() {
-        myIndfoWindow.marker.setAnimation( null );
+    myInfoWindow.addListener('closeclick' , function() {
+        myInfoWindow.marker.setAnimation( null );
     });
 }
 
@@ -271,10 +271,10 @@ function get_flickr(marker) {
             images += '<img src = "' + 'https://farm' + myPhotos[i].farm + '.staticflickr.com/' + myPhotos[i].server + '/' + myPhotos[i].id + '_' + myPhotos[i].secret + '.jpg" height="100px" width="100px">';
         }
 
-        myIndfoWindow.setContent(images);
+        myInfoWindow.setContent(images);
     }).fail(function(response, status, error) {
         images += "Canit load images some error there";
-        myIndfoWindow.setContent(images);
+        myInfoWindow.setContent(images);
     });
 
 }
@@ -345,7 +345,7 @@ function fourSquare(query, radius) {
         newBounds.extend(marker.position);
 
         marker.addListener('click', function(){
-            populateInfoWindow(this, myIndfoWindow);
+            populateInfoWindow(this, myInfoWindow);
         });
         markerList.push(marker);
     }
@@ -372,7 +372,7 @@ function highlightMarker( markerTitle ) {
     {
         if( markerList[ i ].title == markerTitle )
         {
-            populateInfoWindow( markerList[i] , myIndfoWindow );
+            populateInfoWindow( markerList[i] , myInfoWindow );
             return;
         }
     }
