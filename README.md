@@ -5,9 +5,9 @@ _This project is a part of Full Stack Web Developer Nanodegree provided by Udaci
 ## About Project:
 
 * It is a single page dynamic application for exploring your neighborhood.
-* You can search for you location or click the 'My location' button to visit your area.
+* You can search for your location using the input box or click the 'My location' button to visit your area.
 * I have used google maps API for displaying the location on map.
-* FourSquare API for dynamically finding the location you want.
+* FourSquare API for dynamically finding the location you want using the keyword and the radius you provide.
 * I have also added wunderground API for displaying weather of the city.
 * Additionally I have also added live search to search through the results.
 
