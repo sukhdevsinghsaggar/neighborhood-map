@@ -1,13 +1,11 @@
 // for storing the map instance
 var map;
-var service;
 // for storing the info window instance
 var myInfoWindow;
 // for storing the markers
-var markerList = [];   
-// for storing the result 
-var myRes = [];
-var mainResult = []; 
+var markerList = [];
+
+var mainResult = [];
 // for setting the default lattitude and longitude
 var latitude = 30.7333;
 var longitude = 76.7794;
@@ -15,14 +13,16 @@ var longitude = 76.7794;
 function currentLocation() {
     
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (p)  {
+        navigator.geolocation.getCurrentPosition(function (p) {
             latitude = p.coords.latitude;
             longitude = p.coords.longitude;
             initMap();
         });
     } else {
       // in case of any error
-        alert('Geo Location feature is not supported in this browser.');
+        
+    var prevLat = latitude;
+    var prevLong = longitude;
     }
 
 }
@@ -40,10 +40,13 @@ function GetLocation() {
             if (status == google.maps.GeocoderStatus.OK) {
                 latitude = results[0].geometry.location.lat();
                 longitude = results[0].geometry.location.lng();
+                console.log(latitude);
+                
                 initMap();
             } else {
               // in case of error
-                alert("Request failed.")
+                ViewModel.errorPresent(true);
+                ViewModel.error('Cant fetch result from Geocode');
             }
     });
 };
@@ -294,15 +297,15 @@ function showWeather() {
             content += 'Weather: ' + articles.weather + '\n';
             content += 'Temperature: ' + articles.temperature_string + '\n';
             content += articles.observation_time;
-            ViewModel.myWeather(content);
             //console.log(content);
             alert(content);
         } else {
-            ViewModel.myWeather('Response not available!');
+            alert('Response not available!');
         }
     }).fail(function(response, status, data) {
-        ViewModel.myWeather('Failed to Load Weather today');
-    });
+        ViewModel.errorPresent(true);
+        ViewModel.error('Cant fetch result from api');
+    }); 
 
 }
 
@@ -322,7 +325,7 @@ function fourSquare(query, radius) {
         url: 'https://api.foursquare.com/v2/venues/search',
         dataType: 'json',
         data: 'client_id=FVRNLKZDCN45OVJVBTBGB3KKG3WONRYVQRN2XRFWJAU1X3Z5&client_secret=OUX5LTUMSATZKBUA5LWW3APUSKJT0AZPDHRT3VB3R1WLYPZ1&v=20130815%20&ll=+' + latitude + ',' + longitude + '&radius=' + radius + '&limit=15&query=' + query,
-        async:false
+        async:true
     }).done(function(response){
         var result = '';
         var resList = response.response.venues;
@@ -349,7 +352,11 @@ function fourSquare(query, radius) {
         });
         markerList.push(marker);
     }
-    map.fitBounds(newBounds);
+    
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.fitBounds(newBound); // `bounds` is a `LatLngBounds` object
+    });
+        
     ViewModel.init();
 
     }).fail(function(response,status, error){
@@ -361,14 +368,14 @@ function fourSquare(query, radius) {
 // error handling
 function callErrorMethod() {
 
-    ViewModel.error( ' cant  Load the map' );
-    ViewModel.errorPresent( true );
+    ViewModel.error('Cant load the Map');
+    ViewModel.errorPresent(true);
 }
 
 // highlights the marker
 function highlightMarker( markerTitle ) {
 
-    for( var i in markerList )
+    for( var i = 0; i < markerList.length; i++ )
     {
         if( markerList[ i ].title == markerTitle )
         {
@@ -405,7 +412,7 @@ var ViewModel = {
 
     init : function() {
         ViewModel.finalList.removeAll();
-        for( var i in markerList )
+        for( var i = 0; i < markerList.length; i++ )
         {
             //console.log( markerList[i] );
             ViewModel.finalList.push( markerList[i].title );
@@ -414,7 +421,7 @@ var ViewModel = {
 
     findInList : function( text ){
         ViewModel.finalList.removeAll();
-        for( var i in markerList )
+        for( var i = 0; i < markerList.length; i++ )
         {
             if( markerList[ i ].title.toLowerCase().indexOf( text.toLowerCase() ) > -1 )
             {
@@ -426,8 +433,7 @@ var ViewModel = {
                 markerList[ i ].setVisible( false );
             }
         }
-    },
-    myWeather: ko.observable("")
+    }
 
 }
 ko.applyBindings(ViewModel);

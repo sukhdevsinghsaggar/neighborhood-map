@@ -18,49 +18,49 @@
                 <div data-bind = "visible : errorPresent">
                     <h3 data-bind = "text : error"></h3>
                 </div>
-                <form data-bind="submit: newLocation">
-                    <center>
-                        Enter Location: <input type="text" style="width:25%" name="userAddress" placeholder="Enter the location to search!" class="in" data-bind = 'value : userAddress'>
-                        <button class="btn" type="submit">Submit</button>
-                </form>
-                <input  style="width:125px" class="btn" type="submit" value="Current location" data-bind="click: currentLocation">
-                    </center>
+                <center>
+                    <form data-bind="submit: newLocation">
+                            Enter Location: <input type="text" name="userAddress" placeholder="Enter the location to search!" class="in in1" data-bind = 'value : userAddress'>
+                            <button class="btn" type="submit">Submit</button>
+                    </form>
+                    <input class="btn btn1" type="submit" value="Current location" data-bind="click: currentLocation">
+                </center>
                 <hr>
                 <center>
-                <form data-bind="submit: placeTypeFunc">
-                    <h3>What to you want to search for?</h3>
-                    <span style="width:40%">
-                        Keyword: <input type="text" name="placeType" placeholder="Search for places nearby" class="search" data-bind = 'value : placeType'>
-                    </span>
-                    <span style="width:40%">
-                        Radius(In meters): <input type="input" name="radius" placeholder="Radius in which you want to search" class="search" data-bind = 'value : radius'>
-                    </span>
-                    <center>
-                    <button class="btn" style="width:50%" type="submit">Submit</button>
-                    </center>
-                </form>
-                    </center><hr>
+                    <form data-bind="submit: placeTypeFunc">
+                        <h3>What to you want to search for?</h3>
+                        <span class="span1">
+                            Keyword: <input type="text" name="placeType" placeholder="Search for places nearby" class="search" data-bind = 'value : placeType'>
+                        </span>
+                        <span class="span1">
+                            Radius(In meters): <input type="input" name="radius" placeholder="Radius in which you want to search" class="search" data-bind = 'value : radius'>
+                        </span>
+                        
+                        <button class="btn" class="width50" type="submit">Submit</button>
+                    </form>
+                </center>
+                <hr>
                 <center>
-                <div style="width:90%">
-                <input id="show-weather" style="width:90%" type="button" class="btn " value="Weather of Neighborhood" data-bind="click: showWeather">
+                <div class="width90">
+                    <input id="show-weather" class="width90" type="button" class="btn " value="Weather of Neighborhood" data-bind="click: showWeather">
                 </div>
-                    </center>
+                </center>
                 <hr>
                 <center>
-                <span style="width:95%">
-                    <h3> Search result for <span data-bind = 'text: placeType'></span> in <span data-bind = 'text: userAddress'></span> within radius <span data-bind = 'text: radius'></span>:  </h3>
-                </span>
-                    </center>
+                    <span class="width95">
+                        <h3> Search result for <span data-bind = 'text: placeType'></span> in <span data-bind = 'text: userAddress'></span> within radius <span data-bind = 'text: radius'></span>:  </h3>
+                    </span>
+                </center>
                 <center>
                     <p><b>Select a venue from the whole output:</b></p>
-                <input type="input" name="place" placeholder="Filter from the all the result" style="width:95%" data-bind = 'value : testToSearch , valueUpdate : "keyup"'>
-                    
-                <div style="overflow-y: scroll; height:150px;">
-                    <ul style="margin-left:-40px" data-bind = "foreach : finalList" >
-                        <li style="list-style: none;" data-bind = "text : $data , click : highlightMarker"></li>
-                    </ul>
-                </div>
-                    </center>
+                    <input type="input" name="place" placeholder="Filter from the all the result" class="width95" data-bind = 'value : testToSearch , valueUpdate : "keyup"'>
+
+                    <div class="div1">
+                        <ul class="ul-left" data-bind = "foreach : finalList" >
+                            <li class="li-nostyle" data-bind = "text : $data , click : highlightMarker"></li>
+                        </ul>
+                    </div>
+                </center>
             </div>
             <div id="map"></div>
         </div>
