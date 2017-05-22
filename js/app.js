@@ -9,9 +9,9 @@ var mainResult = [];
 // for setting the default lattitude and longitude
 var latitude = 30.7333;
 var longitude = 76.7794;
-// getting the current location 
+// getting the current location
 function currentLocation() {
-    
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (p) {
             latitude = p.coords.latitude;
@@ -20,7 +20,7 @@ function currentLocation() {
         });
     } else {
       // in case of any error
-        
+
     var prevLat = latitude;
     var prevLong = longitude;
     }
@@ -41,7 +41,7 @@ function GetLocation() {
                 latitude = results[0].geometry.location.lat();
                 longitude = results[0].geometry.location.lng();
                 console.log(latitude);
-                
+
                 initMap();
             } else {
               // in case of error
@@ -198,7 +198,7 @@ function initMap(){
               ]
           }
       ]
-    
+
     // creating a new map instance
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -209,8 +209,7 @@ function initMap(){
         // applying styles
         styles: styles,
         // setting the zoom level
-        zoom: 15
-
+        //zoom: 14
 
     });
     // creating a new info window instance
@@ -244,11 +243,11 @@ function populateInfoWindow(marker, myInfoWindow)
     myInfoWindow.marker = marker;
 
     myInfoWindow.marker.setAnimation( google.maps.Animation.BOUNCE );
-    
+
     toggleBounce(marker);
-    
+
     get_flickr(marker);
-    
+
     myInfoWindow.open( map , marker );
 
     myInfoWindow.addListener('closeclick' , function() {
@@ -305,7 +304,7 @@ function showWeather() {
     }).fail(function(response, status, data) {
         ViewModel.errorPresent(true);
         ViewModel.error('Cant fetch result from api');
-    }); 
+    });
 
 }
 
@@ -352,11 +351,11 @@ function fourSquare(query, radius) {
         });
         markerList.push(marker);
     }
-    
+
     google.maps.event.addDomListener(window, 'resize', function() {
-        map.fitBounds(newBound); // `bounds` is a `LatLngBounds` object
+        map.fitBounds(newBounds); // `bounds` is a `LatLngBounds` object
     });
-        
+    map.fitBounds(newBounds);
     ViewModel.init();
 
     }).fail(function(response,status, error){
