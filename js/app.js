@@ -216,7 +216,7 @@ function initMap(){
     myInfoWindow = new google.maps.InfoWindow();
     var placeTypeSearch = ViewModel.placeType();
     placeTypeSearch = encodeURIComponent(placeTypeSearch.trim());
-    // fetch the zomato data
+    // fetch the fourSquare data
     fourSquare(placeTypeSearch, ViewModel.radius());
 
 }
